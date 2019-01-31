@@ -1,0 +1,49 @@
+
+
+<%@ page import="Com.SendRequest.Campaign"%>
+<%@ page import="java.io.*"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<%
+HttpSession Session = null;
+Session = request.getSession(); // Create Session Id
+String Sessionid = Session.getId();
+String DesktopFile = request.getParameter("Id");
+String str[] = DesktopFile.split("\\*");
+for(int i=0; i<=str.length-1; i++) {
+System.out.println("DesktopFile "+ str[i]);	//  Number, Media Type, URL
+
+if( str[1].equalsIgnoreCase("Desktop") ) {
+	
+	
+}else {
+	
+}
+ 
+}
+
+
+
+System.out.println("DesktopFile "+ DesktopFile);
+Campaign c1 = new Campaign();
+c1.getdata1();
+c1.GetDesktopResponse("http://beta-bidder.vrtzads.com/vzbidder/bid?exchangeId=705712f550cc479497fbdbf2edce5569", Integer.parseInt(str[0])); // GenerGenerateResponseate Response for Request
+String desktopfilename = c1.SaveResult_Desktop(Sessionid); // Save the Result file for DeskTop Request pass Session id 
+%>
+
+
+<%
+String uname = ".txt";
+String filename = "Desktop";
+String filepath = "/home/tr-dt-052/Desktop/My Project/MyWorkspace/BidRequest/WebContent/resources/ResultFile/";
+response.setContentType("APPLICATION/OCTET-STREAM");
+response.setHeader("Content-Disposition","attachment; filename=\"" +filename+"_"+desktopfilename+DesktopFile+".txt"+"\""); //  File Name to user
+FileInputStream fi = new FileInputStream(filepath+filename+desktopfilename+Sessionid+uname);
+int i;   
+while ((i=fi.read()) != -1){
+  out.write(i);
+}  
+fi.close();  
+%>
